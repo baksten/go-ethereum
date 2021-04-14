@@ -32,6 +32,15 @@ func MainnetGenesis() string {
 	return ""
 }
 
+// CheapethGenesis returns the JSON spec to use for the Cheapeth test network.
+func CheapethGenesis() string {
+	enc, err := json.Marshal(core.DefaultCheapethGenesisBlock())
+	if err != nil {
+		panic(err)
+	}
+	return string(enc)
+}
+
 // RopstenGenesis returns the JSON spec to use for the Ropsten test network.
 func RopstenGenesis() string {
 	enc, err := json.Marshal(core.DefaultRopstenGenesisBlock())

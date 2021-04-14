@@ -236,6 +236,10 @@ func (w *wizard) manageGenesis() {
 		w.conf.Genesis.Config.IstanbulBlock = w.readDefaultBigInt(w.conf.Genesis.Config.IstanbulBlock)
 
 		fmt.Println()
+		fmt.Printf("Which block should Cheapeth come into effect? (default = %v)\n", w.conf.Genesis.Config.CheapethBlock)
+		w.conf.Genesis.Config.CheapethBlock = w.readDefaultBigInt(w.conf.Genesis.Config.CheapethBlock)
+
+		fmt.Println()
 		fmt.Printf("Which block should Berlin come into effect? (default = %v)\n", w.conf.Genesis.Config.BerlinBlock)
 		w.conf.Genesis.Config.BerlinBlock = w.readDefaultBigInt(w.conf.Genesis.Config.BerlinBlock)
 
