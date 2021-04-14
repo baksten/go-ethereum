@@ -136,6 +136,7 @@ func (h *ethHandler) handleHeaders(peer *eth.Peer, headers []*types.Header) erro
 
 			// Validate the header and either drop the peer or continue
 			if headers[0].Hash() != h.checkpointHash {
+				fmt.Println("CHECKPOINT HASH MISMATCH", "we have:", h.checkpointHash, "peer has", headers[0].Hash())
 				return errors.New("checkpoint hash mismatch")
 			}
 			return nil
