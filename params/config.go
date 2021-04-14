@@ -111,7 +111,7 @@ var (
 		PetersburgBlock:     big.NewInt(7_280_000),
 		IstanbulBlock:       big.NewInt(9_069_000),
 		MuirGlacierBlock:    big.NewInt(9_200_000),
-		CheapethBlock:         big.NewInt(11_818_959),
+		CheapethBlock:         big.NewInt(11_818_960),
 		Ethash:              new(EthashConfig),
 	}
 
