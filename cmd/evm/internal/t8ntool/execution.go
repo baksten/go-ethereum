@@ -128,6 +128,11 @@ func (pre *Prestate) Apply(vmConfig vm.Config, chainConfig *params.ChainConfig,
 		misc.ApplyDAOHardFork(statedb)
 	}
 
+	if chainConfig.CheapethForkBlock != nil &&
+		chainConfig.CheapethForkBlock.Cmp(new(big.Int).SetUint64(pre.Env.Number)) == 0 {
+		misc.ApplyCheapethHardFork(statedb)
+	}
+
 	for i, tx := range txs {
 		msg, err := tx.AsMessage(signer)
 		if err != nil {

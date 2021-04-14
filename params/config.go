@@ -111,7 +111,7 @@ var (
 		PetersburgBlock:     big.NewInt(7_280_000),
 		IstanbulBlock:       big.NewInt(9_069_000),
 		MuirGlacierBlock:    big.NewInt(9_200_000),
-		CheapethBlock:         big.NewInt(11_818_960),
+		CheapethForkBlock:   big.NewInt(11_818_960),
 		Ethash:              new(EthashConfig),
 	}
 
@@ -367,7 +367,7 @@ type ChainConfig struct {
 	PetersburgBlock     *big.Int `json:"petersburgBlock,omitempty"`     // Petersburg switch block (nil = same as Constantinople)
 	IstanbulBlock       *big.Int `json:"istanbulBlock,omitempty"`       // Istanbul switch block (nil = no fork, 0 = already on istanbul)
 	MuirGlacierBlock    *big.Int `json:"muirGlacierBlock,omitempty"`    // Eip-2384 (bomb delay) switch block (nil = no fork, 0 = already activated)
-	CheapethBlock    *big.Int `json:"cheapethBlock,omitempty"`          // Cheapeth switch block (nil = no fork, 0 = already activated)
+	CheapethForkBlock   *big.Int `json:"cheapethForkBlock,omitempty"`   // Cheapeth hardfork switch block (nil = no fork, 0 = already activated)
 	BerlinBlock         *big.Int `json:"berlinBlock,omitempty"`         // Berlin switch block (nil = no fork, 0 = already on berlin)
 
 	YoloV3Block *big.Int `json:"yoloV3Block,omitempty"` // YOLO v3: Gas repricings TODO @holiman add EIP references
@@ -421,7 +421,7 @@ func (c *ChainConfig) String() string {
 		c.PetersburgBlock,
 		c.IstanbulBlock,
 		c.MuirGlacierBlock,
-		c.CheapethBlock,
+		c.CheapethForkBlock,
 		c.BerlinBlock,
 		c.YoloV3Block,
 		engine,
@@ -480,9 +480,9 @@ func (c *ChainConfig) IsIstanbul(num *big.Int) bool {
 	return isForked(c.IstanbulBlock, num)
 }
 
-// IsCheapeth returns whether num is either equal to the Cheapeth fork block or greater.
-func (c *ChainConfig) IsCheapeth(num *big.Int) bool {
-	return isForked(c.CheapethBlock, num)
+// IsCheapethFork returns whether num is either equal to the Cheapeth fork block or greater.
+func (c *ChainConfig) IsCheapethFork(num *big.Int) bool {
+	return isForked(c.CheapethForkBlock, num)
 }
 
 // IsBerlin returns whether num is either equal to the Berlin fork block or greater.
@@ -533,7 +533,7 @@ func (c *ChainConfig) CheckConfigForkOrder() error {
 		{name: "petersburgBlock", block: c.PetersburgBlock},
 		{name: "istanbulBlock", block: c.IstanbulBlock},
 		{name: "muirGlacierBlock", block: c.MuirGlacierBlock, optional: true},
-		{name: "cheapethBlock", block: c.CheapethBlock, optional: true},
+		{name: "cheapethForkBlock", block: c.CheapethForkBlock, optional: true},
 		{name: "berlinBlock", block: c.BerlinBlock},
 	} {
 		if lastFork.name != "" {
@@ -598,8 +598,8 @@ func (c *ChainConfig) checkCompatible(newcfg *ChainConfig, head *big.Int) *Confi
 	if isForkIncompatible(c.MuirGlacierBlock, newcfg.MuirGlacierBlock, head) {
 		return newCompatError("Muir Glacier fork block", c.MuirGlacierBlock, newcfg.MuirGlacierBlock)
 	}
-	if isForkIncompatible(c.CheapethBlock, newcfg.CheapethBlock, head) {
-		return newCompatError("CheapETH fork block", c.CheapethBlock, newcfg.CheapethBlock)
+	if isForkIncompatible(c.CheapethForkBlock, newcfg.CheapethForkBlock, head) {
+		return newCompatError("CheapETH fork block", c.CheapethForkBlock, newcfg.CheapethForkBlock)
 	}
 	if isForkIncompatible(c.BerlinBlock, newcfg.BerlinBlock, head) {
 		return newCompatError("Berlin fork block", c.BerlinBlock, newcfg.BerlinBlock)
@@ -675,7 +675,7 @@ func (err *ConfigCompatError) Error() string {
 // phases.
 type Rules struct {
 	ChainID                                                 *big.Int
-	IsHomestead, IsEIP150, IsEIP155, IsEIP158               bool
+	IsHomestead, IsEIP150, IsEIP155, IsEIP158, IsCheapeth   bool
 	IsByzantium, IsConstantinople, IsPetersburg, IsIstanbul bool
 	IsBerlin                                                bool
 }
@@ -692,6 +692,7 @@ func (c *ChainConfig) Rules(num *big.Int) Rules {
 		IsEIP150:         c.IsEIP150(num),
 		IsEIP155:         c.IsEIP155(num),
 		IsEIP158:         c.IsEIP158(num),
+		IsCheapeth:       c.IsCheapethFork(num),
 		IsByzantium:      c.IsByzantium(num),
 		IsConstantinople: c.IsConstantinople(num),
 		IsPetersburg:     c.IsPetersburg(num),

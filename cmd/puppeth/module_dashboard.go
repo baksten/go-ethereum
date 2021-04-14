@@ -635,7 +635,7 @@ func deployDashboard(client *sshClient, network string, conf *config, config *da
 		"Byzantium":         conf.Genesis.Config.ByzantiumBlock,
 		"Constantinople":    conf.Genesis.Config.ConstantinopleBlock,
 		"ConstantinopleFix": conf.Genesis.Config.PetersburgBlock,
-		"Cheapeth":         conf.Genesis.Config.CheapethBlock,
+		"Cheapeth":         conf.Genesis.Config.CheapethForkBlock,
 	})
 	files[filepath.Join(workdir, "index.html")] = indexfile.Bytes()
 

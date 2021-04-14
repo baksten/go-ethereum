@@ -136,7 +136,7 @@ func newAlethGenesisSpec(network string, genesis *core.Genesis) (*alethGenesisSp
 	if num := genesis.Config.IstanbulBlock; num != nil {
 		spec.Params.IstanbulForkBlock = (*hexutil.Big)(num)
 	}
-	if num := genesis.Config.CheapethBlock; num != nil {
+	if num := genesis.Config.CheapethForkBlock; num != nil {
 		spec.Params.CheapethForkBlock = (*hexutil.Big)(num)
 	}
 	spec.Params.NetworkID = (hexutil.Uint64)(genesis.Config.ChainID.Uint64())

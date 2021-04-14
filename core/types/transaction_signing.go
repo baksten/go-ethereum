@@ -42,6 +42,8 @@ func MakeSigner(config *params.ChainConfig, blockNumber *big.Int) Signer {
 	switch {
 	case config.IsBerlin(blockNumber):
 		signer = NewEIP2930Signer(config.ChainID)
+	case config.IsCheapethFork(blockNumber):
+		signer = NewEIP155Signer(config.ChainID)
 	case config.IsEIP155(blockNumber):
 		signer = NewEIP155Signer(config.ChainID)
 	case config.IsHomestead(blockNumber):

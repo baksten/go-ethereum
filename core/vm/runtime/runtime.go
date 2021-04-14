@@ -65,7 +65,7 @@ func setDefaults(cfg *Config) {
 			PetersburgBlock:     new(big.Int),
 			IstanbulBlock:       new(big.Int),
 			MuirGlacierBlock:    new(big.Int),
-			CheapethBlock:       new(big.Int),
+			CheapethForkBlock:   new(big.Int),
 			BerlinBlock:         new(big.Int),
 			YoloV3Block:         nil,
 		}
