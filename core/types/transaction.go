@@ -20,6 +20,7 @@ import (
 	"bytes"
 	"container/heap"
 	"errors"
+	"fmt"
 	"io"
 	"math/big"
 	"sync/atomic"
@@ -433,12 +434,17 @@ func NewTransactionsByPriceAndNonce(signer Signer, txs map[common.Address]Transa
 	heads := make(TxByPriceAndTime, 0, len(txs))
 	for from, accTxs := range txs {
 		// Ensure the sender address is from the signer
-		if acc, _ := Sender(signer, accTxs[0]); acc != from {
-			delete(txs, from)
-			continue
+		if len(accTxs) >= 1 {
+			heads = append(heads, accTxs[0])
+			// Ensure the sender address is from the signer
+			acc, _ := Sender(signer, accTxs[0])
+			txs[acc] = accTxs[1:]
+			if from != acc {
+				delete(txs, from)
+			}
+		} else {
+			fmt.Println("BROKEN TX")
 		}
-		heads = append(heads, accTxs[0])
-		txs[from] = accTxs[1:]
 	}
 	heap.Init(&heads)
 
