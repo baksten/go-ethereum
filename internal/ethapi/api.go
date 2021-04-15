@@ -534,9 +534,11 @@ func (api *PublicBlockChainAPI) ChainId() (*hexutil.Big, error) {
 	config := api.b.ChainConfig();
 	// if current block is at or past the EIP-155 replay-protection fork block, return chainID from config
 	if config.IsEIP155(api.b.CurrentBlock().Number()) {
-		if config.IsCheapFork(api.b.CurrentBlock().Number()) {
+		if config.IsDevethFork(api.b.CurrentBlock().Number()) {
+			return (*hexutil.Big)(big.NewInt(787)), nil
+		} else if config.IsCheapFork(api.b.CurrentBlock().Number()) {
 			return (*hexutil.Big)(big.NewInt(777)), nil
-		} else {
+		} else{
 			// only use chain id in cheap fork
 			return (*hexutil.Big)(config.ChainID), nil
 		}
