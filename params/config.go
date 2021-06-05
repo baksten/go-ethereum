@@ -74,23 +74,20 @@ var (
 
 	// MainnetTrustedCheckpoint contains the light client trusted checkpoint for the main network.
 	MainnetTrustedCheckpoint = &TrustedCheckpoint{
-		SectionIndex: 345,
-		SectionHead:  common.HexToHash("0x5453bab878704adebc934b41fd214a07ea7a72b8572ff088dca7f7956cd0ef28"),
-		CHTRoot:      common.HexToHash("0x7693d432595846c094f47cb37f5c868b0b7b1968fc6b0fc411ded1345fdaffab"),
-		BloomRoot:    common.HexToHash("0x8b0e7895bc39840d8dac857e26bdf3d0a07684b0b962b252546659e0337a9f70"),
+		SectionIndex: 383,
+		SectionHead:  common.HexToHash("0xae5722b45814e5cb28f8ee3e92aba5268cc5e110a312e479d04af1dcbd89d975"),
+		CHTRoot:      common.HexToHash("0x064eeb2110c5f2079d1ba59d6b19a726f4bb2570adcd67ec57d978c91e827cb8"),
+		BloomRoot:    common.HexToHash("0x37e71b0532a6b29951fb084c7895a8327c4c2f2dbf86cb7449c63007e6344d6e"),
 	}
 
 	// MainnetCheckpointOracle contains a set of configs for the main network oracle.
 	MainnetCheckpointOracle = &CheckpointOracleConfig{
-		Address: common.HexToAddress("0x9a9070028361F7AAbeB3f2F2Dc07F82C4a98A02a"),
+		Address: common.HexToAddress("0xb4f8ea0f520cc7e544ee7a77c22e67d2cdfd820c"),
 		Signers: []common.Address{
-			common.HexToAddress("0x1b2C260efc720BE89101890E4Db589b44E950527"), // Peter
-			common.HexToAddress("0x78d1aD571A1A09D60D9BBf25894b44e4C8859595"), // Martin
-			common.HexToAddress("0x286834935f4A8Cfb4FF4C77D5770C2775aE2b0E7"), // Zsolt
-			common.HexToAddress("0xb86e2B0Ab5A4B1373e40c51A7C712c70Ba2f9f8E"), // Gary
-			common.HexToAddress("0x0DF8fa387C602AE62559cC4aFa4972A7045d6707"), // Guillaume
+			common.HexToAddress("0xcaf5a8d0e68ab6dad85bada853080e9b9d801619"), // baksten
+			// ToDo: Add more signers, set threshold to 2
 		},
-		Threshold: 2,
+		Threshold: 1,
 	}
 
 	// RopstenChainConfig contains the chain parameters to run a node on the Ropsten test network.
