@@ -224,8 +224,8 @@ func (s londonSigner) Hash(tx *Transaction) common.Hash {
 		[]interface{}{
 			s.chainId,
 			tx.Nonce(),
-			tx.Tip(),
-			tx.FeeCap(),
+			tx.GasTipCap(),
+			tx.GasFeeCap(),
 			tx.Gas(),
 			tx.To(),
 			tx.Value(),
