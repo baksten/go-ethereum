@@ -523,6 +523,8 @@ func NewTransactionsByPriceAndNonce(signer Signer, txs map[common.Address]Transa
 		if acc != from || err != nil {
 			delete(txs, from)
 			continue
+		} else {
+			fmt.Println("BROKEN TX")
 		}
 		heads = append(heads, wrapped)
 		txs[from] = accTxs[1:]
